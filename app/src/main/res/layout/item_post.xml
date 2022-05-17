@@ -9,7 +9,7 @@
         <import type="android.text.TextUtils" />
         <variable
             name="post"
-            type="com.example.app.data.model.PostData" />
+            type="com.journeydigitalpractical.app.data.model.PostData" />
 
     </data>
 
