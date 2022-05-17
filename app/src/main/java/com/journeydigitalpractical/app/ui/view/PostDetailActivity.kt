@@ -76,6 +76,17 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 commentAdapter.filter.filter(query, Filter.FilterListener {
                 })
+                if(commentAdapter.filterCommentList.isEmpty())
+                {
+                    tvCommentError.visibility = View.VISIBLE
+                    tvCommentError.setText(getString(R.string.str_no_comment))
+
+                }
+                else
+                {
+                    tvCommentError.visibility = View.GONE
+
+                }
                 return false
             }
 

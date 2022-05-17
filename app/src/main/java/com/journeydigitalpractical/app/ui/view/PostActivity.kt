@@ -66,6 +66,14 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 adapter.filter.filter(query, Filter.FilterListener {
                 })
+                if(adapter.filterPostList.isEmpty())
+                {
+                    tvError.visibility = View.VISIBLE
+                    tvError.setText(getString(R.string.str_no_comment))
+                }
+                else{
+                    tvError.visibility = View.GONE
+                }
                 return false
             }
 
@@ -73,11 +81,11 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
                 adapter.filter.filter(newText);
                 if(adapter.filterPostList.isEmpty())
                 {
-                    tvCommentError.visibility = View.VISIBLE
-                    tvCommentError.setText(getString(R.string.str_no_comment))
+                    tvError.visibility = View.VISIBLE
+                    tvError.setText(getString(R.string.str_no_comment))
                 }
                 else{
-                    tvCommentError.visibility = View.GONE
+                    tvError.visibility = View.GONE
                 }
                 return false
             }
@@ -112,6 +120,8 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     private fun observeResponse() {
         mPostViewModel.apply {
             response.observe(this@PostActivity, Observer<MutableList<PostData>> {
+                showHideLoading(false)
+
                 if (it != null && it.isNotEmpty()) {
                     mDb.postDao().deleteAll()
                     mDb.postDao().insertAll(it)
