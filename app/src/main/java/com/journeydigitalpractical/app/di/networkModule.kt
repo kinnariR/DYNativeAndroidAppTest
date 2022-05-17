@@ -1,6 +1,7 @@
 package com.journeydigitalpractical.di
 
 import com.google.gson.GsonBuilder
+import com.journeydigitalpractical.ui.base.App
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

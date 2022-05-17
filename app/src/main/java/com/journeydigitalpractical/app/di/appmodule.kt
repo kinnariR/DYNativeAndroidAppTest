@@ -1,4 +1,4 @@
-package com.journeydigitalpractical.di
+package com.journeydigitalpractical.app.di
 
 import com.journeydigitalpractical.app.data.repository.Repository
 

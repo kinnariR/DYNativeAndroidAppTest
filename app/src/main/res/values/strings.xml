@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">DyNativeAndroidAppTest</string>
     <string name="error_no_internet_connection">No internet connection available.\nPlease try later.</string>
-    <string name="error_fetching_user_data">Error in fetching Post data</string>
+    <string name="error_fetching_post_data">Error in fetching Post data</string>
+    <string name="error_fetching_comment_data">Error in fetching Comment data</string>
     <string name="posts">Posts</string>
     <string name="str_comment">Comments</string>
+    <string name="str_postTitle">Post Title</string>
+    <string name="str_journeyDigital">Welcome to Journey Digital</string>
+    <string name="str_no_comment">No Comments Found</string>
 </resources>

@@ -2,7 +2,7 @@ package com.journeydigitalpractical.ui.base
 
 import android.app.Application
 
-import com.journeydigitalpractical.di.appModule
+import com.journeydigitalpractical.app.di.appModule
 import com.journeydigitalpractical.di.networkModule
 import com.journeydigitalpractical.di.viewModelModule
 import com.journeydigitalpractical.app.di.apiModule

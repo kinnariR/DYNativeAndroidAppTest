@@ -10,7 +10,7 @@ import com.journeydigitalpractical.app.data.model.PostData
 /**
  * Database config class
  */
-@Database(entities = [PostData::class,CommentData::class], version = 5, exportSchema = false)
+@Database(entities = [PostData::class,CommentData::class], version = 6, exportSchema = false)
 abstract class PostDb : RoomDatabase() {
 
     abstract fun postDao(): PostDao

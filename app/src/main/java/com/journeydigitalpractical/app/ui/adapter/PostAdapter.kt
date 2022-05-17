@@ -25,12 +25,11 @@ class PostAdapter(
     private val onItemClick: (mData: PostData) -> Unit
 ) :
     RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
-    // use this in base class to access items
-   // protected var postFilterData = mData
-    private var filterPostList:MutableList<PostData> = postList;
-    init {
-        filterPostList = postList;
-    }
+    /**
+     * Initialize filter list for filter post data
+     */
+     var filterPostList: MutableList<PostData> = postList;
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val mBinding = DataBindingUtil.bind<ItemPostBinding>(itemView)!!
@@ -46,7 +45,7 @@ class PostAdapter(
         holder.mBinding.tvPostDesc.text = filterPostList[position].description
 
         holder.itemView.setOnClickListener {
-            onItemClick(postList[position])
+            onItemClick(filterPostList[position])
         }
     }
 
@@ -55,24 +54,23 @@ class PostAdapter(
     }
 
 
-//filter data according to post search
+    /**
+     * Filter Data according to Post Search
+     */
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                filterPostList = if (charSearch.isEmpty()) {
-                    postList
+                val data = if (charSearch.isEmpty()) {
+                    filterPostList
                 } else {
-                    val resultList = ArrayList<PostData>()
-                    for (row in postList) {
-                        if (row.title.lowercase().contains(constraint.toString().lowercase())) {
-                            resultList.add(row)
-                        }
-                    }
+                    val resultList =
+                        postList.filter { it.title.lowercase().contains(charSearch, true) }
+                            .toMutableList()
                     resultList
                 }
                 val filterResults = FilterResults()
-                filterResults.values = postList
+                filterResults.values = data
                 return filterResults
             }
 
@@ -82,7 +80,6 @@ class PostAdapter(
             }
         }
     }
-
 
 
 }

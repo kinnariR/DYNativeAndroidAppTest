@@ -11,8 +11,8 @@ import com.journeydigitalpractical.app.data.model.CommentData
 @Dao
 interface CommentDao {
 
-    @Query("SELECT * FROM comments")
-    fun getAll(): List<CommentData>
+    @Query("SELECT * FROM comments where postId=:postId")
+    fun getAll(postId: Int): MutableList<CommentData>
 
     @Insert
     fun insertAll(users: List<CommentData>)

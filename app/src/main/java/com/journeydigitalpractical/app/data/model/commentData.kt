@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName
 data class CommentData(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id") val id: Int,
-    @SerializedName("postId") val userId: Int,
+    @SerializedName("postId") val postId: Int,
     @ColumnInfo(name = "name") @SerializedName("name") val name: String,
     @ColumnInfo(name = "email") @SerializedName("email") val email: String,
     @ColumnInfo(name = "body") @SerializedName("body") val comment: String,

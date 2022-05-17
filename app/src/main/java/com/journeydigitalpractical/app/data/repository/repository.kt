@@ -3,8 +3,10 @@ package com.journeydigitalpractical.app.data.repository
 import com.journeydigitalpractical.app.data.api.ApiService
 import com.journeydigitalpractical.app.data.model.CommentData
 import com.journeydigitalpractical.app.data.model.PostData
+import com.journeydigitalpractical.app.db.PostDb
+import com.journeydigitalpractical.app.utils.ConnectionChecker
+import com.journeydigitalpractical.ui.base.App
 import io.reactivex.Single
-
 
 
 /**

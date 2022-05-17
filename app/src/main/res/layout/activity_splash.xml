@@ -12,6 +12,37 @@
         android:background="@color/purple_500"
         tools:context=".ui.view.activity.SplashActivity">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_30"
+            android:text="@string/str_journeyDigital">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/splashLogo"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_gravity="center">
+
+        </ImageView>
+        </LinearLayout>
+
 
     </FrameLayout>
 </layout>

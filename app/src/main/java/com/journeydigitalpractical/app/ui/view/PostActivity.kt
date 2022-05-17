@@ -3,7 +3,9 @@ package com.journeydigitalpractical.app.ui.view
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.View
+import android.widget.Filter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
@@ -19,6 +21,7 @@ import com.journeydigitalpractical.app.utils.ConnectionChecker
 import com.journeydigitalpractical.app.R
 import com.journeydigitalpractical.app.databinding.ActivityPostBinding
 import kotlinx.android.synthetic.main.activity_post.*
+import kotlinx.android.synthetic.main.activity_post_detail.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PostActivity : BaseActivity<ActivityPostBinding>() {
@@ -29,34 +32,57 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     lateinit var adapter: PostAdapter
 
     override fun onViewReady() {
-            supportActionBar?.title = getString(R.string.posts)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this,R.color.purple_700)))
+        supportActionBar?.title = getString(R.string.posts)
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                ContextCompat.getColor(
+                    this,
+                    R.color.purple_700
+                )
+            )
+        )
 
         mDb = PostDb.getDatabaseClient(this)
 
-        if (ConnectionChecker.checkConnection(this)) {
-            mPostViewModel.fetchPosts()
-        } else {
-            val listData = mDb.postDao().getAll()
-            if (listData.isNotEmpty()) {
-                rvPosts.layoutManager = LinearLayoutManager(this)
-                adapter = PostAdapter(listData) { navigateToNextScreen(it.title,it.id)
-                rvPosts.adapter = adapter}
-            } else {
-                showHideError(true)
-                mBinding.tvError.text = getString(R.string.error_no_internet_connection)
-            }
-        }
+        fetchPostData()
 
-        val searchIcon = searchPosts.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
+        //Search icon for searchView
+        val searchIcon =
+            searchPosts.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
         searchIcon.setColorFilter(Color.BLACK)
 
-
-        val cancelIcon = searchPosts.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        //cancel icon for searchView
+        val cancelIcon =
+            searchPosts.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
         cancelIcon.setColorFilter(Color.BLACK)
+        cancelIcon.setOnClickListener {
+            searchPosts.setQuery("", false)
+        }
 
+        //text for searchView
         val textView = searchPosts.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
         textView.setTextColor(Color.BLACK)
+        searchPosts.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                adapter.filter.filter(query, Filter.FilterListener {
+                })
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter.filter.filter(newText);
+                if(adapter.filterPostList.isEmpty())
+                {
+                    tvCommentError.visibility = View.VISIBLE
+                    tvCommentError.setText(getString(R.string.str_no_comment))
+                }
+                else{
+                    tvCommentError.visibility = View.GONE
+                }
+                return false
+            }
+
+        })
 
 
         mPostViewModel.apply {
@@ -64,41 +90,48 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
             observeError()
             observeResponse()
         }
-        searchPosts.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String): Boolean {
-                adapter.filter.filter(query);
-                return true
-            }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText);
-                return true
-            }
-
-        })
     }
 
+    /**
+     * Fetch Post Data from api or database when network is not available
+     */
+
+    private fun fetchPostData() {
+        if (ConnectionChecker.checkConnection(this)) {
+            mPostViewModel.fetchPosts()
+        } else {
+            val listData = mDb.postDao().getAll()
+            mPostViewModel.response.postValue(listData)
+        }
+    }
+
+    /**
+     * viewModel observeResponse from api
+     */
     private fun observeResponse() {
         mPostViewModel.apply {
             response.observe(this@PostActivity, Observer<MutableList<PostData>> {
                 if (it != null && it.isNotEmpty()) {
                     mDb.postDao().deleteAll()
-                        mDb.postDao().insertAll(it)
+                    mDb.postDao().insertAll(it)
 
                 }
                 rvPosts.layoutManager = LinearLayoutManager(this@PostActivity)
-                adapter = PostAdapter(it) { navigateToNextScreen(it.title,it.id)  }
+                adapter = PostAdapter(it) { navigateToNextScreen(it.title, it.id) }
                 rvPosts.adapter = adapter
 
             })
         }
     }
-    private fun navigateToNextScreen(postTitle:String,postId:Int){
-        val intent: Intent = Intent(this@PostActivity, PostDetailActivity::class.java)
-        intent.putExtra("PostTitle",postTitle)
-        intent.putExtra("PostId",postId)
 
+    private fun navigateToNextScreen(postTitle: String, postId: Int) {
+        val intent: Intent = Intent(this@PostActivity, PostDetailActivity::class.java)
+        intent.putExtra("PostTitle", postTitle)
+        intent.putExtra("PostId", postId)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right,
+            R.anim.slide_out_left);
     }
 
     private fun observeLoading() {
@@ -107,6 +140,9 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
         })
     }
 
+    /**
+     * viewModel observeError from api if there is any error occur
+     */
     private fun observeError() {
         mPostViewModel.apply {
             hasError.observe(this@PostActivity, Observer<Boolean> {
