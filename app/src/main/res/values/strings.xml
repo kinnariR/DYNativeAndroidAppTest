@@ -8,4 +8,6 @@
     <string name="str_postTitle">Post Title</string>
     <string name="str_journeyDigital">Welcome to Journey Digital</string>
     <string name="str_no_comment">No Comments Found</string>
+    <string name="str_no_post">No Posts Found</string>
+
 </resources>

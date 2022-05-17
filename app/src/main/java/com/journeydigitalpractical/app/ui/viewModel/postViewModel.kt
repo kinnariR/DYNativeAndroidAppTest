@@ -42,7 +42,7 @@ class PostViewModel(private val mRepo: Repository) : ViewModel() {
                 }
 
                 override fun onError(e: Throwable) {
-                        loading.value = false
+                    loading.value = false
                     errorMessage.value =
                         mBinding.root.context.getString(R.string.error_fetching_post_data)
                     hasError.value = true

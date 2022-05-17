@@ -20,7 +20,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             moveToNext()
         }
         mHandler.postDelayed(mRunnable, 2000)
-        splashLogo.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.blog))
+        splashLogo.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.blog))
     }
 
 

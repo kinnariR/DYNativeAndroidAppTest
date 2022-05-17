@@ -49,14 +49,14 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
         if (intent?.extras != null) {
             title = intent.getStringExtra("PostTitle").toString()
             id = intent.getIntExtra("PostId", 0)
-            supportActionBar?.title =  title
+            supportActionBar?.title = title
 
         }
 
 
         fetchPostComments(id)
 
-         //Search icon for searchView
+        //Search icon for searchView
         val searchIcon =
             searchComments.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
         searchIcon.setColorFilter(Color.BLACK)
@@ -70,20 +70,18 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
         }
 
         //text for searchView
-        val textView = searchComments.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
+        val textView =
+            searchComments.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
         textView.setTextColor(Color.BLACK)
         searchComments.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 commentAdapter.filter.filter(query, Filter.FilterListener {
                 })
-                if(commentAdapter.filterCommentList.isEmpty())
-                {
+                if (commentAdapter.filterCommentList.isEmpty()) {
                     tvCommentError.visibility = View.VISIBLE
                     tvCommentError.setText(getString(R.string.str_no_comment))
 
-                }
-                else
-                {
+                } else {
                     tvCommentError.visibility = View.GONE
 
                 }
@@ -92,14 +90,11 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 commentAdapter.filter.filter(newText);
-                if(commentAdapter.filterCommentList.isEmpty())
-                {
+                if (commentAdapter.filterCommentList.isEmpty()) {
                     tvCommentError.visibility = View.VISIBLE
                     tvCommentError.setText(getString(R.string.str_no_comment))
 
-                }
-                else
-                {
+                } else {
                     tvCommentError.visibility = View.GONE
 
                 }
@@ -132,6 +127,7 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
             mCommentViewModel.response.postValue(commentData)
         }
     }
+
     /**
      *  observeResponse from api
      */
@@ -149,7 +145,7 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
 
                 rvComments.layoutManager = LinearLayoutManager(this@PostDetailActivity)
                 commentAdapter = CommentAdapter(it) { }
-                rvComments.adapter= commentAdapter
+                rvComments.adapter = commentAdapter
             })
         }
     }
@@ -189,6 +185,7 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
         finish()
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.getItemId()) {
             android.R.id.home -> {

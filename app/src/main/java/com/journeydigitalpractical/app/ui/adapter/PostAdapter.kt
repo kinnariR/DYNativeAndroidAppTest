@@ -28,7 +28,7 @@ class PostAdapter(
     /**
      * Initialize filter list for filter post data
      */
-     var filterPostList: MutableList<PostData> = postList;
+    var filterPostList: MutableList<PostData> = postList;
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

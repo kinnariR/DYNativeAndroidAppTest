@@ -66,12 +66,10 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 adapter.filter.filter(query, Filter.FilterListener {
                 })
-                if(adapter.filterPostList.isEmpty())
-                {
+                if (adapter.filterPostList.isEmpty()) {
                     tvError.visibility = View.VISIBLE
-                    tvError.setText(getString(R.string.str_no_comment))
-                }
-                else{
+                    tvError.setText(getString(R.string.str_no_post))
+                } else {
                     tvError.visibility = View.GONE
                 }
                 return false
@@ -79,12 +77,10 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText);
-                if(adapter.filterPostList.isEmpty())
-                {
+                if (adapter.filterPostList.isEmpty()) {
                     tvError.visibility = View.VISIBLE
-                    tvError.setText(getString(R.string.str_no_comment))
-                }
-                else{
+                    tvError.setText(getString(R.string.str_no_post))
+                } else {
                     tvError.visibility = View.GONE
                 }
                 return false
@@ -140,8 +136,10 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
         intent.putExtra("PostTitle", postTitle)
         intent.putExtra("PostId", postId)
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_right,
-            R.anim.slide_out_left);
+        overridePendingTransition(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left
+        );
     }
 
     private fun observeLoading() {

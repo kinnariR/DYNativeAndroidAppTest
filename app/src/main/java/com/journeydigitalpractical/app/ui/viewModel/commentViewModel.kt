@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
  * Handle business logic for Comment List
  */
 class CommentViewModel(private val mRepo: Repository) : ViewModel() {
-     private lateinit var mBinding: ActivityPostDetailBinding
+    private lateinit var mBinding: ActivityPostDetailBinding
     private var compositeDisposable: CompositeDisposable? = null
     var response = MutableLiveData<MutableList<CommentData>>()
     var errorMessage = MutableLiveData<String>()
@@ -30,7 +30,7 @@ class CommentViewModel(private val mRepo: Repository) : ViewModel() {
 
 
     @SuppressLint("CheckResult")
-    fun fetchComments(postId:Int) {
+    fun fetchComments(postId: Int) {
         loading.value = true
         val mDisposable = mRepo.fetchComments(postId).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object :
