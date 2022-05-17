@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.app">
+    package="com.journeydigitalpractical.app">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.ui.base.App"
+        android:name="com.journeydigitalpractical.ui.base.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,12 +15,12 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MVVMDemoApplication">
         <activity
-            android:name="com.example.app.ui.view.PostActivity"
+            android:name="com.journeydigitalpractical.app.ui.view.PostActivity"
             android:exported="true" />
-        <activity android:name=".ui.view.PostDetailActivity"
+        <activity android:name="com.journeydigitalpractical.app.ui.view.PostDetailActivity"
             android:exported="true"/>
         <activity
-            android:name="com.example.app.ui.view.SplashActivity"
+            android:name="com.journeydigitalpractical.app.ui.view.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
